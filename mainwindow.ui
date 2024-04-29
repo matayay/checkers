@@ -7,13 +7,885 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>1000</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="board" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>800</width>
+      <height>800</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: black;</string>
+    </property>
+    <widget class="QWidget" name="tile00" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile01" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile02" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile04" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile06" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile03" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile05" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile07" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>0</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile10" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile30" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile50" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile70" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile20" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile40" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile60" native="true">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile11" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile13" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile15" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile17" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile22" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile24" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile26" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile31" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile33" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile35" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile37" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile42" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile44" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile46" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile51" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile53" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile55" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile57" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile62" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile64" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile66" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile71" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile73" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile75" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile77" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #D3BA34;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile12" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile14" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile16" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>100</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile21" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile23" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile25" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile27" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>200</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile32" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile34" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile36" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>300</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile41" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile43" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile45" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile47" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>400</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile52" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile54" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile56" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>500</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile61" native="true">
+     <property name="geometry">
+      <rect>
+       <x>100</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile63" native="true">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile65" native="true">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile67" native="true">
+     <property name="geometry">
+      <rect>
+       <x>700</x>
+       <y>600</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile72" native="true">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile74" native="true">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="tile76" native="true">
+     <property name="geometry">
+      <rect>
+       <x>600</x>
+       <y>700</y>
+       <width>100</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: #CDD0D4;</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="game_btn">
+    <property name="geometry">
+     <rect>
+      <x>275</x>
+      <y>825</y>
+      <width>250</width>
+      <height>100</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>35</pointsize>
+      <bold>true</bold>
+      <underline>false</underline>
+      <kerning>true</kerning>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: #94A3B8;
+border: none;
+color: white;</string>
+    </property>
+    <property name="text">
+     <string>Start Game</string>
+    </property>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
