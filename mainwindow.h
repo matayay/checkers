@@ -17,7 +17,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void placeCheckers();
+
 private:
     Ui::MainWindow *ui;
+    QVector<QWidget*> silver_pieces_;
+    QVector<QWidget*> gold_pieces_;
 };
 #endif // MAINWINDOW_H
