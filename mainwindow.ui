@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>1000</height>
+    <width>1000</width>
+    <height>890</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <widget class="QWidget" name="board" native="true">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>100</x>
       <y>0</y>
       <width>800</width>
       <height>800</height>
@@ -862,15 +862,15 @@
    <widget class="QPushButton" name="game_btn">
     <property name="geometry">
      <rect>
-      <x>275</x>
-      <y>825</y>
+      <x>375</x>
+      <y>810</y>
       <width>250</width>
-      <height>100</height>
+      <height>50</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>35</pointsize>
+      <pointsize>25</pointsize>
       <bold>true</bold>
       <underline>false</underline>
       <kerning>true</kerning>
@@ -884,6 +884,9 @@ color: white;</string>
     <property name="text">
      <string>Start Game</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -891,7 +894,7 @@ color: white;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1000</width>
      <height>24</height>
     </rect>
    </property>

@@ -96,12 +96,12 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(800, 1000);
+        MainWindow->resize(1000, 890);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         board = new QWidget(centralwidget);
         board->setObjectName("board");
-        board->setGeometry(QRect(0, 0, 800, 800));
+        board->setGeometry(QRect(100, 0, 800, 800));
         board->setStyleSheet(QString::fromUtf8("background-color: black;"));
         tile00 = new QWidget(board);
         tile00->setObjectName("tile00");
@@ -361,9 +361,9 @@ public:
         tile76->setStyleSheet(QString::fromUtf8("background-color: #CDD0D4;"));
         game_btn = new QPushButton(centralwidget);
         game_btn->setObjectName("game_btn");
-        game_btn->setGeometry(QRect(275, 825, 250, 100));
+        game_btn->setGeometry(QRect(375, 810, 250, 50));
         QFont font;
-        font.setPointSize(35);
+        font.setPointSize(25);
         font.setBold(true);
         font.setUnderline(false);
         font.setKerning(true);
@@ -371,10 +371,11 @@ public:
         game_btn->setStyleSheet(QString::fromUtf8("background-color: #94A3B8;\n"
 "border: none;\n"
 "color: white;"));
+        game_btn->setAutoDefault(false);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 800, 24));
+        menubar->setGeometry(QRect(0, 0, 1000, 24));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");

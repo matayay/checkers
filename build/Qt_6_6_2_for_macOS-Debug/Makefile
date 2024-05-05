@@ -52,10 +52,10 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../../game.cpp \
+SOURCES       = ../../board.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp moc_mainwindow.cpp
-OBJECTS       = game.o \
+OBJECTS       = board.o \
 		main.o \
 		mainwindow.o \
 		moc_mainwindow.o
@@ -193,6 +193,7 @@ DIST          = /Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
 		/Qt/6.6.2/macos/mkspecs/features/qt_config.prf \
 		/Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf \
 		/Qt/6.6.2/macos/mkspecs/features/spec_post.prf \
+		../../.qmake.stash \
 		/Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf \
 		/Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf \
 		/Qt/6.6.2/macos/mkspecs/features/toolchain.prf \
@@ -222,8 +223,8 @@ DIST          = /Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
 		/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../../../../checkers.pro ../../game.h \
-		../../mainwindow.h ../../game.cpp \
+		../../../../checkers.pro ../../board.h \
+		../../mainwindow.h ../../board.cpp \
 		../../main.cpp \
 		../../mainwindow.cpp
 QMAKE_TARGET  = checkers
@@ -234,7 +235,7 @@ TARGET        = checkers.app/Contents/MacOS/checkers
 EXPORT_QMAKE_MAC_SDK = macosx
 EXPORT_QMAKE_MAC_SDK_VERSION = 14.4
 EXPORT_QMAKE_XCODE_DEVELOPER_PATH = /Applications/Xcode.app/Contents/Developer
-EXPORT__QMAKE_STASH_ = 
+EXPORT__QMAKE_STASH_ = /Users/matayay/checkers/build/Qt_6_6_2_for_macOS-Debug/.qmake.stash
 EXPORT_VALID_ARCHS = x86_64 arm64
 EXPORT_DEFAULT_ARCHS = arm64
 EXPORT_ARCHS = $(filter $(EXPORT_VALID_ARCHS), $(if $(ARCHS), $(ARCHS), $(if $(EXPORT_DEFAULT_ARCHS), $(EXPORT_DEFAULT_ARCHS), $(EXPORT_VALID_ARCHS))))
@@ -384,6 +385,7 @@ Makefile: ../../checkers.pro ../../../Qt/6.6.2/macos/mkspecs/features/spec_pre.p
 		../../../Qt/6.6.2/macos/mkspecs/features/qt_config.prf \
 		../../../Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf \
 		../../../Qt/6.6.2/macos/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf \
 		../../../Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf \
 		../../../Qt/6.6.2/macos/mkspecs/features/toolchain.prf \
@@ -552,6 +554,7 @@ Makefile: ../../checkers.pro ../../../Qt/6.6.2/macos/mkspecs/features/spec_pre.p
 ../../../Qt/6.6.2/macos/mkspecs/features/qt_config.prf:
 ../../../Qt/6.6.2/macos/mkspecs/macx-clang/qmake.conf:
 ../../../Qt/6.6.2/macos/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../Qt/6.6.2/macos/mkspecs/features/exclusive_builds.prf:
 ../../../Qt/6.6.2/macos/mkspecs/features/mac/sdk.prf:
 ../../../Qt/6.6.2/macos/mkspecs/features/toolchain.prf:
@@ -609,8 +612,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../game.h ../../mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../game.cpp ../../main.cpp ../../mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../board.h ../../mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../board.cpp ../../main.cpp ../../mainwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -621,6 +624,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r checkers.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -671,14 +675,12 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-game.o: ../../game.cpp ../../game.h \
-		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
-		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+board.o: ../../board.cpp ../../board.h \
 		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../../game.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o board.o ../../board.cpp
 
 main.o: ../../main.cpp ../../mainwindow.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \

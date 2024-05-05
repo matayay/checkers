@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
+#include "board.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,11 +19,18 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void placeCheckers();
+    void update_board();
+    void end_game();
+
+private slots:
+    void on_game_btn_clicked();
 
 private:
     Ui::MainWindow *ui;
+    Board game_board_;
+
     QVector<QWidget*> silver_pieces_;
     QVector<QWidget*> gold_pieces_;
+    QLabel *winner_label_ = nullptr;
 };
 #endif // MAINWINDOW_H
