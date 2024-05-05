@@ -62,6 +62,7 @@ public:
     std::string getWinner();
 
     bool isAttackMove(int row, int col, int newRow, int newCol);
+    bool isValidMove(int row, int col, int newRow, int newCol);
     bool canMove(int row, int col);
     bool isKing(int row, int col);
 

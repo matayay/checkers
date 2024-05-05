@@ -48,78 +48,154 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
 
     if (isKing(row, col))
     {
-        if (get_piece(row - 1, col - 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row - 1, col - 1);
-
-            possible_moves.push_back(new_move);
-        }
-
-        if (get_piece(row - 1, col + 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row - 1, col + 1);
-
-            possible_moves.push_back(new_move);
-        }
-
-        if (get_piece(row + 1, col - 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row + 1, col - 1);
-
-            possible_moves.push_back(new_move);
-        }
-
-        if (get_piece(row + 1, col + 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row + 1, col + 1);
-
-            possible_moves.push_back(new_move);
-        }
-
         if (turn_ == PieceType::Gold)
         {
-            return _movesHelper(row, col, row, col, true, PieceType::Silver, PieceType::SilverKing, possible_moves);
+            if (get_piece(row, col) == PieceType::GoldKing)
+            {
+                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row + 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row + 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row + 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row + 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                return _movesHelper(row, col, row, col, true, PieceType::Silver, PieceType::SilverKing, possible_moves);
+            }
+
+            return possible_moves;
         }
         else
         {
-            return _movesHelper(row, col, row, col, true, PieceType::Gold, PieceType::GoldKing, possible_moves);
+            if (get_piece(row, col) == PieceType::SilverKing)
+            {
+                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row + 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row + 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row + 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row + 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                return _movesHelper(row, col, row, col, true, PieceType::Gold, PieceType::GoldKing, possible_moves);
+            }
+
+            return possible_moves;
         }
     }
+
     else
     {
-        if (get_piece(row - 1, col - 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row - 1, col - 1);
-
-            possible_moves.push_back(new_move);
-        }
-
-        if (get_piece(row - 1, col - 1) == PieceType::Empty)
-        {
-            Move new_move;
-            new_move.start = std::make_pair(row, col);
-            new_move.end = std::make_pair(row - 1, col + 1);
-
-            possible_moves.push_back(new_move);
-        }
-
         if (turn_ == PieceType::Gold)
         {
-            return _movesHelper(row, col, row, col, false, PieceType::Silver, PieceType::SilverKing, possible_moves);
+            if (get_piece(row, col) == PieceType::Gold)
+            {
+                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                return _movesHelper(row, col, row, col, false, PieceType::Silver, PieceType::SilverKing, possible_moves);
+            }
+
+            return possible_moves;
         }
+
         else
         {
-            return _movesHelper(row, col, row, col, false, PieceType::Gold, PieceType::GoldKing, possible_moves);
+            if (get_piece(row, col) == PieceType::Silver)
+            {
+                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col - 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(row, col);
+                    new_move.end = std::make_pair(row - 1, col + 1);
+
+                    possible_moves.push_back(new_move);
+                }
+
+                return _movesHelper(row, col, row, col, false, PieceType::Gold, PieceType::GoldKing, possible_moves);
+            }
+
+            return possible_moves;
         }
     }
 }
@@ -181,6 +257,22 @@ bool Board::isAttackMove(int row, int col, int newRow, int newCol)
     if (std::abs(row - newRow) > std::abs(row - 1) && std::abs(col - newCol) > std::abs(col - 1))
     {
         return true;
+    }
+
+    return false;
+}
+
+
+bool Board::isValidMove(int row, int col, int newRow, int newCol)
+{
+    std::vector<Move> moves = getPossibleMoves(row, col);
+
+    for (int i = 0; i < moves.size(); i++)
+    {
+        if (moves[i].end.first == newRow && moves[i].end.second == newCol)
+        {
+            return true;
+        }
     }
 
     return false;
