@@ -54,10 +54,12 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../../board.cpp \
 		../../main.cpp \
-		../../mainwindow.cpp moc_mainwindow.cpp
+		../../mainwindow.cpp \
+		../../piecefactory.cpp moc_mainwindow.cpp
 OBJECTS       = board.o \
 		main.o \
 		mainwindow.o \
+		piecefactory.o \
 		moc_mainwindow.o
 DIST          = /Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
 		/Qt/6.6.2/macos/mkspecs/features/device_config.prf \
@@ -223,10 +225,19 @@ DIST          = /Qt/6.6.2/macos/mkspecs/features/spec_pre.prf \
 		/Qt/6.6.2/macos/mkspecs/features/exceptions.prf \
 		/Qt/6.6.2/macos/mkspecs/features/yacc.prf \
 		/Qt/6.6.2/macos/mkspecs/features/lex.prf \
-		../../../../checkers.pro ../../board.h \
-		../../mainwindow.h ../../board.cpp \
+		../../../../checkers.pro ../../Empty.h \
+		../../Error.h \
+		../../GoldKing.h \
+		../../GoldPiece.h \
+		../../Piece.h \
+		../../SilverKing.h \
+		../../SilverPiece.h \
+		../../board.h \
+		../../mainwindow.h \
+		../../piecefactory.h ../../board.cpp \
 		../../main.cpp \
-		../../mainwindow.cpp
+		../../mainwindow.cpp \
+		../../piecefactory.cpp
 QMAKE_TARGET  = checkers
 DESTDIR       = 
 TARGET        = checkers.app/Contents/MacOS/checkers
@@ -612,8 +623,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../../board.h ../../mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../../board.cpp ../../main.cpp ../../mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../../Empty.h ../../Error.h ../../GoldKing.h ../../GoldPiece.h ../../Piece.h ../../SilverKing.h ../../SilverPiece.h ../../board.h ../../mainwindow.h ../../piecefactory.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../../board.cpp ../../main.cpp ../../mainwindow.cpp ../../piecefactory.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../../mainwindow.ui $(DISTDIR)/
 
 
@@ -649,6 +660,17 @@ compiler_moc_header_clean:
 moc_mainwindow.cpp: ../../mainwindow.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/qevent.h \
+		../../board.h \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../piecefactory.h \
+		../../Piece.h \
 		../../../Qt/6.6.2/macos/libexec/moc
 	/Users/matayay/Qt/6.6.2/macos/libexec/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -D__cplusplus=199711L -D__APPLE_CC__=6000 -D__clang__ -D__clang_major__=15 -D__clang_minor__=0 -D__clang_patchlevel__=0 -D__GNUC__=4 -D__GNUC_MINOR__=2 -D__GNUC_PATCHLEVEL__=1 -I/Users/matayay/Qt/6.6.2/macos/mkspecs/macx-clang -I/Users/matayay/checkers -I/Users/matayay/Qt/6.6.2/macos/lib/QtWidgets.framework/Headers -I/Users/matayay/Qt/6.6.2/macos/lib/QtGui.framework/Headers -I/Users/matayay/Qt/6.6.2/macos/lib/QtCore.framework/Headers -I. -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include/c++/v1 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/15.0.0/include -I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk/usr/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -F/Users/matayay/Qt/6.6.2/macos/lib ../../mainwindow.h -o moc_mainwindow.cpp
 
@@ -679,12 +701,25 @@ board.o: ../../board.cpp ../../board.h \
 		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
 		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
-		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../piecefactory.h \
+		../../Piece.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o board.o ../../board.cpp
 
 main.o: ../../main.cpp ../../mainwindow.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/qevent.h \
+		../../board.h \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../piecefactory.h \
+		../../Piece.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QApplication \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../main.cpp
@@ -692,8 +727,33 @@ main.o: ../../main.cpp ../../mainwindow.h \
 mainwindow.o: ../../mainwindow.cpp ../../mainwindow.h \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QMainWindow \
 		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QLabel \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qlabel.h \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/QMouseEvent \
+		../../../Qt/6.6.2/macos/lib/QtGui.framework/Headers/qevent.h \
+		../../board.h \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../piecefactory.h \
+		../../Piece.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../../mainwindow.cpp
+
+piecefactory.o: ../../piecefactory.cpp ../../piecefactory.h \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/QObject \
+		../../../Qt/6.6.2/macos/lib/QtCore.framework/Headers/qobject.h \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/QWidget \
+		../../../Qt/6.6.2/macos/lib/QtWidgets.framework/Headers/qwidget.h \
+		../../Piece.h \
+		../../SilverPiece.h \
+		../../GoldPiece.h \
+		../../SilverKing.h \
+		../../GoldKing.h \
+		../../Empty.h \
+		../../Error.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o piecefactory.o ../../piecefactory.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

@@ -11,11 +11,20 @@ CONFIG += c++17
 SOURCES += \
     board.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    piecefactory.cpp
 
 HEADERS += \
+    Empty.h \
+    Error.h \
+    GoldKing.h \
+    GoldPiece.h \
+    Piece.h \
+    SilverKing.h \
+    SilverPiece.h \
     board.h \
-    mainwindow.h
+    mainwindow.h \
+    piecefactory.h
 
 FORMS += \
     mainwindow.ui

@@ -1,3 +1,10 @@
+/**
+AUTHOR: Matayay Karuna
+Project: Checkers
+File: mainwindow.h
+Description: Class definition for the MainWindow which handles the UI of the game.
+**/
+
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 

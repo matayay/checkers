@@ -1,3 +1,10 @@
+/**
+AUTHOR: Matayay Karuna
+Project: Checkers
+File: main.cpp
+Description: Entry point for the Checkers game.
+**/
+
 #include "mainwindow.h"
 
 #include <QApplication>

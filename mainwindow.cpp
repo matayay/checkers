@@ -1,3 +1,10 @@
+/**
+AUTHOR: Matayay Karuna
+Project: Checkers
+File: mainwindow.cpp
+Description: Implementation for all UI interactions on the checkers board.
+**/
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
@@ -61,7 +68,7 @@ void MainWindow::update_board()
                 }
             }
 
-            if (game_board_.get_piece(row, col) == PieceType::Gold)
+            if (game_board_.get_piece(row, col)->getType() == PieceType::Gold)
             {
                 if (tile)
                 {
@@ -77,7 +84,7 @@ void MainWindow::update_board()
                 }
             }
 
-            else if (game_board_.get_piece(row, col) == PieceType::GoldKing)
+            else if (game_board_.get_piece(row, col)->getType() == PieceType::GoldKing)
             {
                 if (tile)
                 {
@@ -93,7 +100,7 @@ void MainWindow::update_board()
                 }
             }
 
-            else if (game_board_.get_piece(row, col) == PieceType::Silver)
+            else if (game_board_.get_piece(row, col)->getType() == PieceType::Silver)
             {
                 if (tile)
                 {
@@ -109,7 +116,7 @@ void MainWindow::update_board()
                 }
             }
 
-            else if (game_board_.get_piece(row, col) == PieceType::SilverKing)
+            else if (game_board_.get_piece(row, col)->getType() == PieceType::SilverKing)
             {
                 if (tile)
                 {

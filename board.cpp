@@ -1,3 +1,10 @@
+/**
+AUTHOR: Matayay Karuna
+Project: Checkers
+File: board.cpp
+Description: Implementation of the flyweight abstraction of the board.
+**/
+
 #include "board.h"
 
 Board::Board()
@@ -10,27 +17,36 @@ Board::Board()
             {
                 if (row < 3)
                 {
-                    board_[row][col] = PieceType::Silver;
-                    silver_tiles_.push_back(std::make_pair(row, col));
+                    std::shared_ptr<Piece> new_piece = PieceFactory::createPiece(PieceType::Silver);
+                    new_piece->setRow(row);
+                    new_piece->setCol(col);
+
+                    board_[row][col] = new_piece;
+                    // silver_tiles_.push_back(new_piece);
                 }
                 else if (row > 4)
                 {
-                    board_[row][col] = PieceType::Gold;
-                    gold_tiles_.push_back(std::make_pair(row, col));
+                    std::shared_ptr<Piece> new_piece = PieceFactory::createPiece(PieceType::Gold);
+                    new_piece->setRow(row);
+                    new_piece->setCol(col);
+
+                    board_[row][col] = new_piece;
+                    // gold_tiles_.push_back(new_piece);
                 }
                 else
                 {
-                    board_[row][col] = PieceType::Empty;
+                    board_[row][col] = PieceFactory::createPiece(PieceType::Empty);
                 }
             }
 
             else
             {
-                board_[row][col] = PieceType::Empty;
+                board_[row][col] = PieceFactory::createPiece(PieceType::Empty);
             }
         }
     }
 
+    error_ = PieceFactory::createPiece(PieceType::Error);
     turn_ = PieceType::Gold;
     gold_pieces_ = 12;
     silver_pieces_ = 12;
@@ -41,18 +57,18 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
 {
     std::vector<Move> possible_moves;
 
-    if (get_piece(row, col) == PieceType::Empty)
+    if (get_piece(row, col)->getType() == PieceType::Empty)
     {
         return possible_moves;
     }
 
-    if (isKing(row, col))
+    if (get_piece(row, col)->isKing())
     {
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row, col) == PieceType::GoldKing)
+            if (get_piece(row, col)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                if (get_piece(row - 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -61,7 +77,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                if (get_piece(row - 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -70,7 +86,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row + 1, col - 1) == PieceType::Empty)
+                if (get_piece(row + 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -79,7 +95,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row + 1, col + 1) == PieceType::Empty)
+                if (get_piece(row + 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -95,9 +111,9 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
         }
         else
         {
-            if (get_piece(row, col) == PieceType::SilverKing)
+            if (get_piece(row, col)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                if (get_piece(row - 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -106,7 +122,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                if (get_piece(row - 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -115,7 +131,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row + 1, col - 1) == PieceType::Empty)
+                if (get_piece(row + 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -124,7 +140,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row + 1, col + 1) == PieceType::Empty)
+                if (get_piece(row + 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -144,9 +160,9 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
     {
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row, col) == PieceType::Gold)
+            if (get_piece(row, col)->getType() == PieceType::Gold)
             {
-                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                if (get_piece(row - 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -155,7 +171,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                if (get_piece(row - 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -172,9 +188,9 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
 
         else
         {
-            if (get_piece(row, col) == PieceType::Silver)
+            if (get_piece(row, col)->getType() == PieceType::Silver)
             {
-                if (get_piece(row + 1, col - 1) == PieceType::Empty)
+                if (get_piece(row + 1, col - 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -183,7 +199,7 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row + 1, col + 1) == PieceType::Empty)
+                if (get_piece(row + 1, col + 1)->getType() == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
@@ -249,42 +265,42 @@ bool Board::isValidMove(int row, int col, int newRow, int newCol)
 
 bool Board::canMove(int row, int col)
 {
-    if (isKing(row, col))
+    if (get_piece(row, col)->isKing())
     {
-        if (get_piece(row - 1, col - 1) == PieceType::Empty || get_piece(row - 1, col + 1) == PieceType::Empty || get_piece(row + 1, col - 1) == PieceType::Empty || get_piece(row + 1, col + 1) == PieceType::Empty)
+        if (get_piece(row - 1, col - 1)->getType() == PieceType::Empty || get_piece(row - 1, col + 1)->getType() == PieceType::Empty || get_piece(row + 1, col - 1)->getType() == PieceType::Empty || get_piece(row + 1, col + 1)->getType() == PieceType::Empty)
         {
             return true;
         }
 
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 1, col - 1) == PieceType::Silver || get_piece(row - 1, col - 1) == PieceType::SilverKing)
+            if (get_piece(row - 1, col - 1)->getType() == PieceType::Silver || get_piece(row - 1, col - 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == PieceType::Silver || get_piece(row - 1, col + 1) == PieceType::SilverKing)
+            if (get_piece(row - 1, col + 1)->getType() == PieceType::Silver || get_piece(row - 1, col + 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row + 1, col - 1) == PieceType::Silver || get_piece(row + 1, col - 1) == PieceType::SilverKing)
+            if (get_piece(row + 1, col - 1)->getType() == PieceType::Silver || get_piece(row + 1, col - 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == PieceType::Silver || get_piece(row + 1, col + 1) == PieceType::SilverKing)
+            if (get_piece(row + 1, col + 1)->getType() == PieceType::Silver || get_piece(row + 1, col + 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
@@ -295,33 +311,33 @@ bool Board::canMove(int row, int col)
 
         else
         {
-            if (get_piece(row - 1, col - 1) == PieceType::Gold || get_piece(row - 1, col - 1) == PieceType::GoldKing)
+            if (get_piece(row - 1, col - 1)->getType() == PieceType::Gold || get_piece(row - 1, col - 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == PieceType::Gold || get_piece(row - 1, col + 1) == PieceType::GoldKing)
+            if (get_piece(row - 1, col + 1)->getType() == PieceType::Gold || get_piece(row - 1, col + 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row + 1, col - 1) == PieceType::Gold || get_piece(row + 1, col - 1) == PieceType::GoldKing)
+            if (get_piece(row + 1, col - 1)->getType() == PieceType::Gold || get_piece(row + 1, col - 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == PieceType::Gold || get_piece(row + 1, col + 1) == PieceType::GoldKing)
+            if (get_piece(row + 1, col + 1)->getType() == PieceType::Gold || get_piece(row + 1, col + 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
@@ -335,22 +351,22 @@ bool Board::canMove(int row, int col)
     {
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 1, col - 1) == PieceType::Empty || get_piece(row - 1, col + 1) == PieceType::Empty)
+            if (get_piece(row - 1, col - 1)->getType() == PieceType::Empty || get_piece(row - 1, col + 1)->getType() == PieceType::Empty)
             {
                 return true;
             }
 
-            if (get_piece(row - 1, col - 1) == PieceType::Silver || get_piece(row - 1, col - 1) == PieceType::SilverKing)
+            if (get_piece(row - 1, col - 1)->getType() == PieceType::Silver || get_piece(row - 1, col - 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == PieceType::Silver || get_piece(row - 1, col + 1) == PieceType::SilverKing)
+            if (get_piece(row - 1, col + 1)->getType() == PieceType::Silver || get_piece(row - 1, col + 1)->getType() == PieceType::SilverKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
@@ -361,22 +377,22 @@ bool Board::canMove(int row, int col)
 
         else
         {
-            if (get_piece(row + 1, col - 1) == PieceType::Empty || get_piece(row + 1, col + 1) == PieceType::Empty)
+            if (get_piece(row + 1, col - 1)->getType() == PieceType::Empty || get_piece(row + 1, col + 1)->getType() == PieceType::Empty)
             {
                 return true;
             }
 
-            if (get_piece(row + 1, col - 1) == PieceType::Gold || get_piece(row + 1, col - 1) == PieceType::GoldKing)
+            if (get_piece(row + 1, col - 1)->getType() == PieceType::Gold || get_piece(row + 1, col - 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == PieceType::Gold || get_piece(row + 1, col + 1) == PieceType::GoldKing)
+            if (get_piece(row + 1, col + 1)->getType() == PieceType::Gold || get_piece(row + 1, col + 1)->getType() == PieceType::GoldKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty)
                 {
                     return true;
                 }
@@ -385,17 +401,6 @@ bool Board::canMove(int row, int col)
             return false;
         }
     }
-}
-
-
-bool Board::isKing(int row, int col)
-{
-    if (get_piece(row, col) == PieceType::GoldKing || get_piece(row, col) == PieceType::SilverKing)
-    {
-        return true;
-    }
-
-    return false;
 }
 
 
@@ -421,62 +426,62 @@ void Board::makeMove(int row, int col, int newRow, int newCol)
         {
             for (int i = 0; i < kills.size(); i++)
             {
-                board_[kills[i].first][kills[i].second] = PieceType::Empty;
+                board_[kills[i].first][kills[i].second] = PieceFactory::createPiece(PieceType::Empty);
 
                 if (turn_ == PieceType::Gold)
                 {
                     silver_pieces_--;
-                    silver_tiles_.erase(std::remove(silver_tiles_.begin(), silver_tiles_.end(), std::make_pair(kills[i].first, kills[i].second)), silver_tiles_.end());
+                    // silver_tiles_.erase(std::remove(silver_tiles_.begin(), silver_tiles_.end(), std::make_pair(kills[i].first, kills[i].second)), silver_tiles_.end());
                 }
                 else
                 {
                     gold_pieces_--;
-                    gold_tiles_.erase(std::remove(gold_tiles_.begin(), gold_tiles_.end(), std::make_pair(kills[i].first, kills[i].second)), gold_tiles_.end());
+                    // gold_tiles_.erase(std::remove(gold_tiles_.begin(), gold_tiles_.end(), std::make_pair(kills[i].first, kills[i].second)), gold_tiles_.end());
                 }
             }
 
-            if (newRow == 0 && get_piece(row, col) == PieceType::Gold && turn_ == PieceType::Gold)
+            if (newRow == 0 && get_piece(row, col)->getType() == PieceType::Gold && turn_ == PieceType::Gold)
             {
-                set_piece(newRow, newCol, PieceType::GoldKing);
-                set_piece(row, col, PieceType::Empty);
+                set_piece(newRow, newCol, PieceFactory::createPiece(PieceType::GoldKing));
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
 
-            else if (newRow == 7 && get_piece(row, col) == PieceType::Silver && turn_ == PieceType::Silver)
+            else if (newRow == 7 && get_piece(row, col)->getType() == PieceType::Silver && turn_ == PieceType::Silver)
             {
-                set_piece(newRow, newCol, PieceType::SilverKing);
-                set_piece(row, col, PieceType::Empty);
+                set_piece(newRow, newCol, PieceFactory::createPiece(PieceType::SilverKing));
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
 
             else
             {
                 set_piece(newRow, newCol, get_piece(row, col));
-                set_piece(row, col, PieceType::Empty);
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
         }
 
         else
         {
-            if (newRow == 0 && get_piece(row, col) == PieceType::Gold && turn_ == PieceType::Gold)
+            if (newRow == 0 && get_piece(row, col)->getType() == PieceType::Gold && turn_ == PieceType::Gold)
             {
-                set_piece(newRow, newCol, PieceType::GoldKing);
-                set_piece(row, col, PieceType::Empty);
+                set_piece(newRow, newCol, PieceFactory::createPiece(PieceType::GoldKing));
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
 
-            else if (newRow == 7 && get_piece(row, col) == PieceType::Silver && turn_ == PieceType::Silver)
+            else if (newRow == 7 && get_piece(row, col)->getType() == PieceType::Silver && turn_ == PieceType::Silver)
             {
-                set_piece(newRow, newCol, PieceType::SilverKing);
-                set_piece(row, col, PieceType::Empty);
+                set_piece(newRow, newCol, PieceFactory::createPiece(PieceType::SilverKing));
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
 
             else
             {
                 set_piece(newRow, newCol, get_piece(row, col));
-                set_piece(row, col, PieceType::Empty);
+                set_piece(row, col, PieceFactory::createPiece(PieceType::Empty));
                 flipBoard();
             }
         }
@@ -563,9 +568,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
 
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+            if (get_piece(row - 1, col - 1)->getType() == enemy || get_piece(row - 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::GoldKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -592,9 +597,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            if (get_piece(row - 1, col + 1)->getType() == enemy || get_piece(row - 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::GoldKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -621,9 +626,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            if (get_piece(row + 1, col - 1)->getType() == enemy || get_piece(row + 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::GoldKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -650,9 +655,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            if (get_piece(row + 1, col + 1)->getType() == enemy || get_piece(row + 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::GoldKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -681,9 +686,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
         }
         else
         {
-            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+            if (get_piece(row - 1, col - 1)->getType() == enemy || get_piece(row - 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::SilverKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -710,9 +715,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            if (get_piece(row - 1, col + 1)->getType() == enemy || get_piece(row - 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::SilverKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -739,9 +744,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            if (get_piece(row + 1, col - 1)->getType() == enemy || get_piece(row + 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::SilverKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -768,9 +773,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            if (get_piece(row + 1, col + 1)->getType() == enemy || get_piece(row + 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::SilverKing)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -826,9 +831,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
 
         if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+            if (get_piece(row - 1, col - 1)->getType() == enemy || get_piece(row - 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Gold)
+                if (get_piece(row - 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::Gold)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -855,9 +860,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            if (get_piece(row - 1, col + 1)->getType() == enemy || get_piece(row - 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Gold)
+                if (get_piece(row - 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::Gold)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -886,9 +891,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
         }
         else
         {
-            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            if (get_piece(row + 1, col - 1)->getType() == enemy || get_piece(row + 1, col - 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Silver)
+                if (get_piece(row + 2, col - 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::Silver)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
@@ -915,9 +920,9 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
                 }
             }
 
-            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            if (get_piece(row + 1, col + 1)->getType() == enemy || get_piece(row + 1, col + 1)->getType() == enemyKing)
             {
-                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Silver)
+                if (get_piece(row + 2, col + 2)->getType() == PieceType::Empty && get_piece(firstRow, firstCol)->getType() == PieceType::Silver)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(firstRow, firstCol);
