@@ -11,6 +11,7 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
@@ -89,6 +90,9 @@ public:
     QWidget *tile74;
     QWidget *tile76;
     QPushButton *game_btn;
+    QLabel *gold_label;
+    QLabel *silver_label;
+    QWidget *turn;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -372,6 +376,25 @@ public:
 "border: none;\n"
 "color: white;"));
         game_btn->setAutoDefault(false);
+        gold_label = new QLabel(centralwidget);
+        gold_label->setObjectName("gold_label");
+        gold_label->setGeometry(QRect(10, 650, 50, 50));
+        QFont font1;
+        font1.setPointSize(40);
+        gold_label->setFont(font1);
+        gold_label->setStyleSheet(QString::fromUtf8("color: #D3BA34;"));
+        gold_label->setAlignment(Qt::AlignCenter);
+        silver_label = new QLabel(centralwidget);
+        silver_label->setObjectName("silver_label");
+        silver_label->setGeometry(QRect(10, 100, 50, 50));
+        silver_label->setFont(font1);
+        silver_label->setStyleSheet(QString::fromUtf8("color: #CDD0D4;"));
+        silver_label->setAlignment(Qt::AlignCenter);
+        turn = new QWidget(centralwidget);
+        turn->setObjectName("turn");
+        turn->setGeometry(QRect(910, 360, 80, 80));
+        turn->setStyleSheet(QString::fromUtf8("background-color: gold;\n"
+"border-radius: 40px;"));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -390,6 +413,8 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "MainWindow", nullptr));
         game_btn->setText(QCoreApplication::translate("MainWindow", "Start Game", nullptr));
+        gold_label->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
+        silver_label->setText(QCoreApplication::translate("MainWindow", "0", nullptr));
     } // retranslateUi
 
 };

@@ -29,6 +29,18 @@ void MainWindow::update_board()
     delete_pieces();
     int count = 0;
 
+    ui->gold_label->setText(QString::number(game_board_.get_gold_pieces()));
+    ui->silver_label->setText(QString::number(game_board_.get_silver_pieces()));
+
+    if (game_board_.get_turn() == PieceType::Gold)
+    {
+        ui->turn->setStyleSheet("background-color: gold; border-radius: 40px;");
+    }
+    else
+    {
+        ui->turn->setStyleSheet("background-color: white; border-radius: 40px;");
+    }
+
     for (int row = 0; row < 8; row++)
     {
         for (int col = 0; col < 8; col++)
@@ -116,12 +128,20 @@ void MainWindow::update_board()
             count++;
         }
     }
+
+    if (game_board_.getWinner() != "Tie!")
+    {
+        end_game();
+    }
 }
 
 
 void MainWindow::end_game()
 {
     ui->game_btn->setText("Start Game");
+    ui->gold_label->setText("0");
+    ui->silver_label->setText("0");
+    ui->turn->setStyleSheet("background-color: gold; border-radius: 40px;");
 
     delete_pieces();
 
@@ -216,6 +236,7 @@ void MainWindow::on_game_btn_clicked()
 
     else if (ui->game_btn->text() == "End Game")
     {
+        ui->board->removeEventFilter(this);
         end_game();
     }
 }

@@ -174,20 +174,20 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
         {
             if (get_piece(row, col) == PieceType::Silver)
             {
-                if (get_piece(row - 1, col - 1) == PieceType::Empty)
+                if (get_piece(row + 1, col - 1) == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
-                    new_move.end = std::make_pair(row - 1, col - 1);
+                    new_move.end = std::make_pair(row + 1, col - 1);
 
                     possible_moves.push_back(new_move);
                 }
 
-                if (get_piece(row - 1, col + 1) == PieceType::Empty)
+                if (get_piece(row + 1, col + 1) == PieceType::Empty)
                 {
                     Move new_move;
                     new_move.start = std::make_pair(row, col);
-                    new_move.end = std::make_pair(row - 1, col + 1);
+                    new_move.end = std::make_pair(row + 1, col + 1);
 
                     possible_moves.push_back(new_move);
                 }
@@ -203,44 +203,12 @@ std::vector<Move> Board::getPossibleMoves(int row, int col)
 
 std::string Board::getWinner()
 {
-    bool gold_win = false;
-    bool silver_win = false;
-
-    if (turn_ == PieceType::Gold)
-    {
-        silver_win = true;
-
-        for (int i = 0; (int) i < (int) gold_tiles_.size(); i++)
-        {
-            std::pair<int, int> gold_tile = gold_tiles_[i];
-            if (canMove(gold_tile.first, gold_tile.second))
-            {
-                silver_win = false;
-                break;
-            }
-        }
-    }
-    else if (turn_ == PieceType::Silver)
-    {
-        gold_win = true;
-
-        for (int i = 0; (int) i < (int) silver_tiles_.size(); i++)
-        {
-            std::pair<int, int> silver_tile = silver_tiles_[i];
-            if (canMove(silver_tile.first, silver_tile.second))
-            {
-                gold_win = false;
-                break;
-            }
-        }
-    }
-
-    if (gold_pieces_ == 0 || silver_win)
+    if (gold_pieces_ == 0)
     {
         return "Silver Wins!";
     }
 
-    else if (silver_pieces_ == 0 || gold_win)
+    else if (silver_pieces_ == 0)
     {
         return "Gold Wins!";
     }
@@ -254,7 +222,7 @@ std::string Board::getWinner()
 
 bool Board::isAttackMove(int row, int col, int newRow, int newCol)
 {
-    if (std::abs(row - newRow) > std::abs(row - 1) && std::abs(col - newCol) > std::abs(col - 1))
+    if (newRow != row - 1 && newCol != col - 1 && newRow != row + 1 && newCol != col + 1)
     {
         return true;
     }
@@ -365,13 +333,13 @@ bool Board::canMove(int row, int col)
 
     else
     {
-        if (get_piece(row - 1, col - 1) == PieceType::Empty || get_piece(row - 1, col + 1) == PieceType::Empty)
-        {
-            return true;
-        }
-
         if (turn_ == PieceType::Gold)
         {
+            if (get_piece(row - 1, col - 1) == PieceType::Empty || get_piece(row - 1, col + 1) == PieceType::Empty)
+            {
+                return true;
+            }
+
             if (get_piece(row - 1, col - 1) == PieceType::Silver || get_piece(row - 1, col - 1) == PieceType::SilverKing)
             {
                 if (get_piece(row - 2, col - 2) == PieceType::Empty)
@@ -393,6 +361,11 @@ bool Board::canMove(int row, int col)
 
         else
         {
+            if (get_piece(row + 1, col - 1) == PieceType::Empty || get_piece(row + 1, col + 1) == PieceType::Empty)
+            {
+                return true;
+            }
+
             if (get_piece(row + 1, col - 1) == PieceType::Gold || get_piece(row + 1, col - 1) == PieceType::GoldKing)
             {
                 if (get_piece(row + 2, col - 2) == PieceType::Empty)
@@ -462,17 +435,16 @@ void Board::makeMove(int row, int col, int newRow, int newCol)
                 }
             }
 
-            if (newRow == 0)
+            if (newRow == 0 && get_piece(row, col) == PieceType::Gold && turn_ == PieceType::Gold)
             {
-                if (turn_ == PieceType::Gold)
-                {
-                    set_piece(newRow, newCol, PieceType::GoldKing);
-                }
-                else
-                {
-                    set_piece(newRow, newCol, PieceType::SilverKing);
-                }
+                set_piece(newRow, newCol, PieceType::GoldKing);
+                set_piece(row, col, PieceType::Empty);
+                flipBoard();
+            }
 
+            else if (newRow == 7 && get_piece(row, col) == PieceType::Silver && turn_ == PieceType::Silver)
+            {
+                set_piece(newRow, newCol, PieceType::SilverKing);
                 set_piece(row, col, PieceType::Empty);
                 flipBoard();
             }
@@ -487,17 +459,16 @@ void Board::makeMove(int row, int col, int newRow, int newCol)
 
         else
         {
-            if (newRow == 0)
+            if (newRow == 0 && get_piece(row, col) == PieceType::Gold && turn_ == PieceType::Gold)
             {
-                if (turn_ == PieceType::Gold)
-                {
-                    set_piece(newRow, newCol, PieceType::GoldKing);
-                }
-                else
-                {
-                    set_piece(newRow, newCol, PieceType::SilverKing);
-                }
+                set_piece(newRow, newCol, PieceType::GoldKing);
+                set_piece(row, col, PieceType::Empty);
+                flipBoard();
+            }
 
+            else if (newRow == 7 && get_piece(row, col) == PieceType::Silver && turn_ == PieceType::Silver)
+            {
+                set_piece(newRow, newCol, PieceType::SilverKing);
                 set_piece(row, col, PieceType::Empty);
                 flipBoard();
             }
@@ -524,60 +495,60 @@ void Board::flipBoard()
         turn_ = PieceType::Gold;
     }
 
-    gold_tiles_.clear();
-    silver_tiles_.clear();
+    // gold_tiles_.clear();
+    // silver_tiles_.clear();
 
-    std::unordered_map<int, bool> map;
-    std::unordered_map<int, bool> flipped[8];
+    // std::unordered_map<int, bool> map;
+    // std::unordered_map<int, bool> flipped[8];
 
-    for (int i = 0; i < 8; i++)
-    {
-        for (int j = 0; j < 8; j++)
-        {
-            flipped[i][j] = false;
-        }
-    }
+    // for (int i = 0; i < 8; i++)
+    // {
+    //     for (int j = 0; j < 8; j++)
+    //     {
+    //         flipped[i][j] = false;
+    //     }
+    // }
 
-    for (int row = 0; row < 8; row++)
-    {
-        for (int col = 0; col < 8; col++)
-        {
-            if (!flipped[row][col])
-            {
-                if (board_[row][col] == PieceType::Gold || board_[row][col] == PieceType::GoldKing)
-                {
-                    PieceType temp = board_[7 - row][7 - col];
-                    board_[7 - row][7 - col] = board_[row][col];
-                    board_[row][col] = temp;
-                    flipped[row][col] = true;
-                    flipped[7 - row][7 - col] = true;
+    // for (int row = 0; row < 8; row++)
+    // {
+    //     for (int col = 0; col < 8; col++)
+    //     {
+    //         if (!flipped[row][col])
+    //         {
+    //             if (board_[row][col] == PieceType::Gold || board_[row][col] == PieceType::GoldKing)
+    //             {
+    //                 PieceType temp = board_[7 - row][7 - col];
+    //                 board_[7 - row][7 - col] = board_[row][col];
+    //                 board_[row][col] = temp;
+    //                 flipped[row][col] = true;
+    //                 flipped[7 - row][7 - col] = true;
 
-                    gold_tiles_.push_back(std::make_pair(7 - row, 7 - col));
+    //                 gold_tiles_.push_back(std::make_pair(7 - row, 7 - col));
 
-                    if (temp == PieceType::Silver || temp == PieceType::SilverKing)
-                    {
-                        silver_tiles_.push_back(std::make_pair(row, col));
-                    }
-                }
+    //                 if (temp == PieceType::Silver || temp == PieceType::SilverKing)
+    //                 {
+    //                     silver_tiles_.push_back(std::make_pair(row, col));
+    //                 }
+    //             }
 
-                else if (board_[row][col] == PieceType::Silver || board_[row][col] == PieceType::SilverKing)
-                {
-                    PieceType temp = board_[7 - row][7 - col];
-                    board_[7 - row][7 - col] = board_[row][col];
-                    board_[row][col] = temp;
-                    flipped[row][col] = true;
-                    flipped[7 - row][7 - col] = true;
+    //             else if (board_[row][col] == PieceType::Silver || board_[row][col] == PieceType::SilverKing)
+    //             {
+    //                 PieceType temp = board_[7 - row][7 - col];
+    //                 board_[7 - row][7 - col] = board_[row][col];
+    //                 board_[row][col] = temp;
+    //                 flipped[row][col] = true;
+    //                 flipped[7 - row][7 - col] = true;
 
-                    silver_tiles_.push_back(std::make_pair(7 - row, 7 - col));
+    //                 silver_tiles_.push_back(std::make_pair(7 - row, 7 - col));
 
-                    if (temp == PieceType::Gold || temp == PieceType::GoldKing)
-                    {
-                        gold_tiles_.push_back(std::make_pair(row, col));
-                    }
-                }
-            }
-        }
-    }
+    //                 if (temp == PieceType::Gold || temp == PieceType::GoldKing)
+    //                 {
+    //                     gold_tiles_.push_back(std::make_pair(row, col));
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 
@@ -590,106 +561,244 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
         std::vector<Move> BLeft = moves;
         std::vector<Move> BRight = moves;
 
-        if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+        if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 2, col - 2) == PieceType::Empty)
+            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
             {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row - 2, col - 2);
-
-                int kills = TLeft[TLeft.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
+                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
                 {
-                    new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col - 2);
+
+                    if (TLeft.size() > 0)
+                    {
+                        int kills = TLeft[TLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col - 1));
+
+                    TLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col - 2, king, enemy, enemyKing, TLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TLeft.push_back(temp[i]);
+                    }
                 }
-                new_move.kills.push_back(std::make_pair(row - 1, col - 1));
+            }
 
-                TLeft.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col - 2, king, enemy, enemyKing, TLeft);
-
-                for (int i = 0; i < temp.size(); i++)
+            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
                 {
-                    TLeft.push_back(temp[i]);
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col + 2);
+
+                    if (TRight.size() > 0)
+                    {
+                        int kills = TRight[TRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col + 1));
+
+                    TRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col + 2, king, enemy, enemyKing, TRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TRight.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col - 2);
+
+                    if (BLeft.size() > 0)
+                    {
+                        int kills = BLeft[BLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(BLeft[BLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col - 1));
+
+                    BLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col - 2, king, enemy, enemyKing, BLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        BLeft.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::GoldKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col + 2);
+
+                    if (BRight.size() > 0)
+                    {
+                        int kills = BRight[BRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(BRight[BRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col + 1));
+
+                    BRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col + 2, king, enemy, enemyKing, BRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        BRight.push_back(temp[i]);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+            {
+                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col - 2);
+
+                    if (TLeft.size() > 0)
+                    {
+                        int kills = TLeft[TLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col - 1));
+
+                    TLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col - 2, king, enemy, enemyKing, TLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TLeft.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col + 2);
+
+                    if (TRight.size() > 0)
+                    {
+                        int kills = TRight[TRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col + 1));
+
+                    TRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col + 2, king, enemy, enemyKing, TRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TRight.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col - 2);
+
+                    if (BLeft.size() > 0)
+                    {
+                        int kills = BLeft[BLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(BLeft[BLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col - 1));
+
+                    BLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col - 2, king, enemy, enemyKing, BLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        BLeft.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::SilverKing)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col + 2);
+
+                    if (BRight.size() > 0)
+                    {
+                        int kills = BRight[BRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(BRight[BRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col + 1));
+
+                    BRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col + 2, king, enemy, enemyKing, BRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        BRight.push_back(temp[i]);
+                    }
                 }
             }
         }
 
-        if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
-        {
-            if (get_piece(row - 2, col + 2) == PieceType::Empty)
-            {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row - 2, col + 2);
-
-                int kills = TRight[TRight.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
-                {
-                    new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
-                }
-                new_move.kills.push_back(std::make_pair(row - 1, col + 1));
-
-                TRight.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col + 2, king, enemy, enemyKing, TRight);
-
-                for (int i = 0; i < temp.size(); i++)
-                {
-                    TRight.push_back(temp[i]);
-                }
-            }
-        }
-
-        if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
-        {
-            if (get_piece(row + 2, col - 2) == PieceType::Empty)
-            {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row + 2, col - 2);
-
-                int kills = BLeft[BLeft.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
-                {
-                    new_move.kills.push_back(BLeft[BLeft.size() - 1].kills[i]);
-                }
-                new_move.kills.push_back(std::make_pair(row + 1, col - 1));
-
-                BLeft.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col - 2, king, enemy, enemyKing, BLeft);
-
-                for (int i = 0; i < temp.size(); i++)
-                {
-                    BLeft.push_back(temp[i]);
-                }
-            }
-        }
-
-        if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
-        {
-            if (get_piece(row + 2, col + 2) == PieceType::Empty)
-            {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row + 2, col + 2);
-
-                int kills = BRight[BRight.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
-                {
-                    new_move.kills.push_back(BRight[BRight.size() - 1].kills[i]);
-                }
-                new_move.kills.push_back(std::make_pair(row + 1, col + 1));
-
-                BRight.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col + 2, king, enemy, enemyKing, BRight);
-
-                for (int i = 0; i < temp.size(); i++)
-                {
-                    BRight.push_back(temp[i]);
-                }
-            }
-        }
-
+        moves.clear();
         for (int i = 0; i < TLeft.size(); i++)
         {
             moves.push_back(TLeft[i]);
@@ -715,56 +824,128 @@ std::vector<Move> Board::_movesHelper(int firstRow, int firstCol, int row, int c
         std::vector<Move> TLeft = moves;
         std::vector<Move> TRight = moves;
 
-        if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
+        if (turn_ == PieceType::Gold)
         {
-            if (get_piece(row - 2, col - 2) == PieceType::Empty)
+            if (get_piece(row - 1, col - 1) == enemy || get_piece(row - 1, col - 1) == enemyKing)
             {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row - 2, col - 2);
-
-                int kills = TLeft[TLeft.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
+                if (get_piece(row - 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Gold)
                 {
-                    new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col - 2);
+
+                    if (TLeft.size() > 0)
+                    {
+                        int kills = TLeft[TLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col - 1));
+
+                    TLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col - 2, king, enemy, enemyKing, TLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TLeft.push_back(temp[i]);
+                    }
                 }
-                new_move.kills.push_back(std::make_pair(row - 1, col - 1));
+            }
 
-                TLeft.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col - 2, king, enemy, enemyKing, TLeft);
-
-                for (int i = 0; i < temp.size(); i++)
+            if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row - 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Gold)
                 {
-                    TLeft.push_back(temp[i]);
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row - 2, col + 2);
+
+                    if (TRight.size() > 0)
+                    {
+                        int kills = TRight[TRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row - 1, col + 1));
+
+                    TRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col + 2, king, enemy, enemyKing, TRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TRight.push_back(temp[i]);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (get_piece(row + 1, col - 1) == enemy || get_piece(row + 1, col - 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col - 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Silver)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col - 2);
+
+                    if (TLeft.size() > 0)
+                    {
+                        int kills = TLeft[TLeft.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TLeft[TLeft.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col - 1));
+
+                    TLeft.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col - 2, king, enemy, enemyKing, TLeft);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TLeft.push_back(temp[i]);
+                    }
+                }
+            }
+
+            if (get_piece(row + 1, col + 1) == enemy || get_piece(row + 1, col + 1) == enemyKing)
+            {
+                if (get_piece(row + 2, col + 2) == PieceType::Empty && get_piece(firstRow, firstCol) == PieceType::Silver)
+                {
+                    Move new_move;
+                    new_move.start = std::make_pair(firstRow, firstCol);
+                    new_move.end = std::make_pair(row + 2, col + 2);
+
+                    if (TRight.size() > 0)
+                    {
+                        int kills = TRight[TRight.size() - 1].kills.size();
+                        for (int i = 0; i < kills; i++)
+                        {
+                            new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
+                        }
+                    }
+
+                    new_move.kills.push_back(std::make_pair(row + 1, col + 1));
+
+                    TRight.push_back(new_move);
+                    std::vector<Move> temp = _movesHelper(firstRow, firstCol, row + 2, col + 2, king, enemy, enemyKing, TRight);
+
+                    for (int i = 0; i < temp.size(); i++)
+                    {
+                        TRight.push_back(temp[i]);
+                    }
                 }
             }
         }
 
-        if (get_piece(row - 1, col + 1) == enemy || get_piece(row - 1, col + 1) == enemyKing)
-        {
-            if (get_piece(row - 2, col + 2) == PieceType::Empty)
-            {
-                Move new_move;
-                new_move.start = std::make_pair(firstRow, firstCol);
-                new_move.end = std::make_pair(row - 2, col + 2);
-
-                int kills = TRight[TRight.size() - 1].kills.size();
-                for (int i = 0; i < kills; i++)
-                {
-                    new_move.kills.push_back(TRight[TRight.size() - 1].kills[i]);
-                }
-                new_move.kills.push_back(std::make_pair(row - 1, col + 1));
-
-                TRight.push_back(new_move);
-                std::vector<Move> temp = _movesHelper(firstRow, firstCol, row - 2, col + 2, king, enemy, enemyKing, TRight);
-
-                for (int i = 0; i < temp.size(); i++)
-                {
-                    TRight.push_back(temp[i]);
-                }
-            }
-        }
-
+        moves.clear();
         for (int i = 0; i < TLeft.size(); i++)
         {
             moves.push_back(TLeft[i]);
